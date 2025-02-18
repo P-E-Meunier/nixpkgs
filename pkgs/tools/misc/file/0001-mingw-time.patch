@@ -1,0 +1,28 @@
+--- a/src/cdf.h
++++ b/src/cdf.h
+@@ -340,7 +340,11 @@
+ file_protected uint16_t cdf_tole2(uint16_t);
+ file_protected uint32_t cdf_tole4(uint32_t);
+ file_protected uint64_t cdf_tole8(uint64_t);
++#ifdef __MINGW64_VERSION_MAJOR
++file_protected char *cdf_ctime(const long *, char *);
++#else
+ file_protected char *cdf_ctime(const time_t *, char *);
++#endif
+ file_protected char *cdf_u16tos8(char *, size_t, const uint16_t *);
+ 
+ #ifdef CDF_DEBUG
+--- a/src/cdf_time.c
++++ b/src/cdf_time.c
+@@ -166,7 +166,11 @@
+ }
+ 
+ file_protected char *
++#ifdef __MINGW64_VERSION_MAJOR
++cdf_ctime(const long *sec, char *buf)
++#else
+ cdf_ctime(const time_t *sec, char *buf)
++#endif
+ {
+ 	char *ptr = *sec > MAX_CTIME ? NULL : ctime_r(sec, buf);
+ 	if (ptr != NULL)

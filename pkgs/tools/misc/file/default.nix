@@ -26,6 +26,10 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-ycx3x8VgxUMTXtxVWvYJ1WGdvvARmX6YjOQKPXXYYIg=";
   };
 
+  patches = [
+    ./0001-mingw-time.patch
+  ];
+
   outputs = [
     "out"
     "dev"
