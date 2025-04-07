@@ -14,6 +14,15 @@ rustPlatform.buildRustPackage rec {
   useFetchCargoVendor = true;
   cargoHash = "sha256-E7kskULt2eOY+mZjh6jAftj8ciExUF7d1z1pePTBzvQ=";
 
+  # Disabling tests meant to work over the network, as they will fail
+  # inside the builder.
+  checkFlags = [
+    "--skip=cmd::install::upgrade::fixture"
+    "--skip=cmd::publish::lib::fixture"
+    "--skip=cmd::publish::local::fixture"
+    "--skip=cmd::tuto::fixture"
+  ];
+
   meta = {
     description = "Modern protobuf package management";
     homepage = "https://github.com/helsing-ai/buffrs";
